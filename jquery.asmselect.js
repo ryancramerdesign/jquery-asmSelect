@@ -1,5 +1,5 @@
 /*
- * Alternate Select Multiple (asmSelect) 1.0.4a beta - jQuery Plugin
+ * Alternate Select Multiple (asmSelect) 1.0.5 beta - jQuery Plugin
  * http://www.ryancramer.com/projects/asmselect/
  * 
  * Copyright (c) 2009 by Ryan Cramer - http://www.ryancramer.com
@@ -124,9 +124,12 @@
 
 				if($.browser.msie && $.browser.version < 7 && !ieClick) return;
 				var id = $(this).children("option:selected").slice(0,1).attr('rel'); 
-				addListItem(id); 	
-				ieClick = false; 
-				triggerOriginalChange(id, 'add'); // for use by user-defined callbacks
+				if(id) { 
+					// thanks to petersumskas and eliel_goco@yahoo.com
+					addListItem(id); 	
+					ieClick = false; 
+					triggerOriginalChange(id, 'add'); // for use by user-defined callbacks
+				}
 			}
 
 			function selectClickEvent() {
@@ -165,19 +168,25 @@
 				buildingSelect = true; 
 
 				// add a first option to be the home option / default selectLabel
-				$select.prepend("<option>" + $original.attr('title') + "</option>"); 
+				$select.prepend("<option value=''>" + $original.attr('title') + "</option>"); 
 
 				$original.children("option").each(function(n) {
 
 					var $t = $(this); 
 					var id; 
+					var isSelected = $t.is(":selected"); 
+					var isDisabled = $t.is(":disabled"); 
 
 					if(!$t.attr('id')) $t.attr('id', 'asm' + index + 'option' + n); 
 					id = $t.attr('id'); 
 
-					if($t.is(":selected")) {
+					if(isSelected && !isDisabled) { 
 						addListItem(id); 
 						addSelectOption(id, true); 						
+
+					} else if(!isSelected && isDisabled) {
+						addSelectOption(id, true); 
+
 					} else {
 						addSelectOption(id); 
 					}
@@ -196,7 +205,7 @@
 				if(disabled == undefined) var disabled = false; 
 
 				var $O = $('#' + optionId); 
-				var $option = $("<option>" + $O.text() + "</option>")
+				var $option = $("<option>" + $O.html() + "</option>")
 					.val($O.val())
 					.attr('rel', optionId);
 
@@ -219,7 +228,7 @@
 				// we apply a class that reproduces the disabled look in other browsers
 
 				$option.addClass(options.optionDisabledClass)
-					.attr("selected", false)
+					removeAttr("selected")
 					.attr("disabled", true);
 
 				if(options.hideWhenAdded) $option.hide();
@@ -231,7 +240,7 @@
 				// given an already disabled select option, enable it
 
 				$option.removeClass(options.optionDisabledClass)
-					.attr("disabled", false);
+					.removeAttr("disabled"); 
 
 				if(options.hideWhenAdded) $option.show();
 				if($.browser.msie) $select.hide().show(); // this forces IE to update display
@@ -320,7 +329,7 @@
 				if(highlightItem == undefined) var highlightItem = true; 
 				var $O = $('#' + optionId); 
 
-				$O.attr('selected', false); 
+				$O.removeAttr('selected'); 
 				$item = $ol.children("li[rel=" + optionId + "]");
 
 				dropListItemHide($item); 
