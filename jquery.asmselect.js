@@ -1,5 +1,5 @@
 /*
- * Alternate Select Multiple (asmSelect) 1.0.4a beta - jQuery Plugin
+ * Alternate Select Multiple (asmSelect) 1.0.5 beta - jQuery Plugin
  * http://www.ryancramer.com/projects/asmselect/
  * 
  * Copyright (c) 2009 by Ryan Cramer - http://www.ryancramer.com
@@ -22,8 +22,9 @@
 			addItemTarget: 'bottom',				// Where to place new selected items in list: top or bottom
 			hideWhenAdded: false,					// Hide the option when added to the list? works only in FF
 			debugMode: false,					// Debug mode keeps original select visible 
+			jQueryUI: true, 					// Use jQuery UI mode? Adds classes specific to use in jQUery UI
 
-			removeLabel: 'remove',					// Text used in the "remove" link
+			removeLabel: '<span class="ui-icon ui-icon-trash">remove</span>', // Text used in the "remove" link
 			highlightAddedLabel: 'Added: ',				// Text that precedes highlight of added item
 			highlightRemovedLabel: 'Removed: ',			// Text that precedes highlight of removed item
 
@@ -112,6 +113,12 @@
 						}); 
 
 						if(updatedOptionId) triggerOriginalChange(updatedOptionId, 'sort'); 
+					},
+					start: function(e, data) {
+						if(options.jQueryUI) data.item.addClass('ui-state-highlight'); 
+					},
+					stop: function(e, data) {
+						if(options.jQueryUI) data.item.removeClass('ui-state-highlight'); 
 					}
 
 				}).addClass(options.listSortableClass); 
@@ -196,7 +203,7 @@
 				if(disabled == undefined) var disabled = false; 
 
 				var $O = $('#' + optionId); 
-				var $option = $("<option>" + $O.text() + "</option>")
+				var $option = $("<option>" + $O.html() + "</option>")
 					.val($O.val())
 					.attr('rel', optionId);
 
@@ -264,6 +271,16 @@
 					.append($itemLabel)
 					.append($removeLink)
 					.hide();
+
+				if(options.jQueryUI) {
+					$item.addClass('ui-state-default ui-priority-secondary')
+					.hover(function() {
+						$(this).addClass('ui-state-hover').removeClass('ui-state-default'); 
+					}, function() {
+						$(this).addClass('ui-state-default').removeClass('ui-state-hover'); 
+					}); 
+					if(options.sortable) $item.prepend("<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"); 
+				}
 
 				if(!buildingSelect) {
 					if($O.is(":selected")) return; // already have it
@@ -379,7 +396,9 @@
 				$select.after($highlight); 
 
 				$highlight.fadeIn("fast", function() {
-					setTimeout(function() { $highlight.fadeOut("slow"); }, 50); 
+					setTimeout(function() { $highlight.fadeOut("slow", function() {
+						$(this).remove();
+					}); }, 50); 
 				}); 
 			}
 

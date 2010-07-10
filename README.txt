@@ -6,6 +6,11 @@ http://code.google.com/p/jquery-asmselect/
 See related article at: 
 http://www.ryancramer.com/journal/entries/select_multiple/
 
+VERSION 1.0.5 beta - July 10, 2010
+
+- Branch for using asmSelect with jQuery UI
+
+
 VERSION 1.0.4a beta - June 3rd, 2009
 
 - Minor update to correct IE8 issue. 

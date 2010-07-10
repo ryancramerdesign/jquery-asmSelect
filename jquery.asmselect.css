@@ -16,6 +16,7 @@
 	/* the highlight span */
 	padding: 0;
 	margin: 0 0 0 1em;
+	display: inline;
 }
 
 .asmList {
@@ -31,23 +32,23 @@
 	/* li item from the html list above */
 	position: relative; 
 	margin-left: 0;
+	margin-bottom: 1px !important; 
 	padding-left: 0;
-	list-style: none;
-	background: #ddd;
-	border: 1px solid #bbb; 
+	list-style: none !important;
 	width: 100%; 
-	margin: 0 0 -1px 0; 
 	line-height: 1em;
 }
 
-.asmListItem:hover {
-	background-color: #e5e5e5;
+.asmListItem .ui-icon-arrowthick-2-n-s {
+	/* jquery ui sort icon */
+	float: left; 
+	margin-top: 1px; 
 }
 
 .asmListItemLabel {
 	/* this is a span that surrounds the text in the item, except for the remove link */
-	padding: 5px; 
 	display: block;
+	padding: 3px 0 3px 5px; 
 }
 
 .asmListSortable .asmListItemLabel {
@@ -57,7 +58,6 @@
 .asmListItemRemove {
 	/* the remove link in each list item */
 	position: absolute;
-	right: 0; 
+	right: 3px; 
 	top: 0;
-	padding: 5px; 
 }
