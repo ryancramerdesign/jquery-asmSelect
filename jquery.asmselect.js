@@ -228,7 +228,7 @@
 				// we apply a class that reproduces the disabled look in other browsers
 
 				$option.addClass(options.optionDisabledClass)
-					removeAttr("selected")
+					.removeAttr("selected")
 					.attr("disabled", true);
 
 				if(options.hideWhenAdded) $option.hide();
