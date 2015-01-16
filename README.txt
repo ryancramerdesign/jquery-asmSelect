@@ -6,7 +6,17 @@ http://code.google.com/p/jquery-asmselect/
 See related article at: 
 http://www.ryancramer.com/journal/entries/select_multiple/
 
-VERSION 1.0.4a beta - June 3rd, 2009
+VERSION 1.0.6a beta - January 16th, 2015
+
+- Adding ability to use optgroup.
+
+- Adding ability to set chosen. Chosen Librirary is required and included
+  in example folder if you chose this option.
+  http://harvesthq.github.io/chosen/
+  
+
+
+VERSION 1.0.5a beta - June 3rd, 2009
 
 - Minor update to correct IE8 issue. 
   Thanks to Matthew Hutton for this fix. 
