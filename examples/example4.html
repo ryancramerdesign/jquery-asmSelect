@@ -1,10 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
+	<meta charest="utf-8">
 
 	<script type="text/javascript" src="jquery.js"></script>
-	<script type="text/javascript" src="jquery.ui.js"></script>
+        <script type="text/javascript" src="jquery-ui.min.js"></script>
+        <script type="text/javascript" src="jquery-migrate-1.2.1.min.js"></script>
+        <script type="text/javascript" src="chosen.jquery.min.js"></script>
 	<script type="text/javascript" src="../jquery.asmselect.js"></script>
+
 
 	<script type="text/javascript">
 
@@ -14,18 +18,29 @@
 				addItemTarget: 'bottom',
 				animate: true,
 				highlight: true,
-				sortable: true
+				sortable: true,
+				selectClass: "chosen"
 
 			}).after($("<a href='#'>Select All</a>").click(function() {
 				$("#cities").children().attr("selected", "selected").end().change();
 				return false;
 			})); 
 
-			
+                        $( 'input[type=submit]' ).on( "click", function(){
+                                data = $( this ).parent( ).parent().serializeArray();
+                                cities = [];
+                                $.each( data, function( idx, obj ){
+                                        if( obj['value'] ) cities.push( obj['value'] );
+                                });
+                                alert( "Submited Data: " + cities );
+                                return false;
+                        });
+	
 		}); 
 
 	</script>
 
+	<link rel="stylesheet" type="text/css" href="chosen.min.css" />
 	<link rel="stylesheet" type="text/css" href="../jquery.asmselect.css" />
 	<link rel="stylesheet" type="text/css" href="example.css" />
 
@@ -53,6 +68,7 @@
                         <option>Los Angeles</option>
 		</select>
 
+		<p><input type="submit" name="submit" value="submit" /></p>
 	</form>
 
 	<ul id='footer'>
