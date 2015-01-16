@@ -11,7 +11,9 @@ VERSION 1.0.6a beta - January 16th, 2015
 - Adding ability to use optgroup.
 
 - Adding ability to set chosen. Chosen Librirayr
-  is required if you chose this option. 
+  is required if you chose this option.
+  http://harvesthq.github.io/chosen/
+  
 
 
 VERSION 1.0.5a beta - June 3rd, 2009
